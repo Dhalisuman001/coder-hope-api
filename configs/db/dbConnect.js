@@ -4,10 +4,9 @@ import "dotenv/config";
 const DbConnection = async () => {
   try {
     mongoose.set("strictQuery", false);
-    mongoose.connect(process.env.MONGO_URL, {
+    mongoose.connect(process.env.URL, {
       autoIndex: true,
     });
-    console.log("Db connected successfully to--> ", process.env.MONGO_URL);
   } catch (error) {
     console.log(error);
   }
