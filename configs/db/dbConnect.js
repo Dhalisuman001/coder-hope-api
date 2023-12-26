@@ -6,10 +6,8 @@ const DbConnection = async () => {
     mongoose.set("strictQuery", false);
     mongoose.connect(process.env.MONGO_URL, {
       autoIndex: true,
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
     });
-    console.log("Db connected successfully");
+    console.log("Db connected successfully to--> ", process.env.MONGO_URL);
   } catch (error) {
     console.log(error);
   }
