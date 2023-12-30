@@ -18,15 +18,15 @@ const blogSchema = mongoose.Schema(
     des: {
       type: String,
       maxlength: 200,
-      required: true,
+      // required: true,
     },
     content: {
       type: Object,
-      required: true,
+      // required: true,
     },
     tags: {
       type: [String],
-      required: true,
+      // required: true,
     },
     author: {
       type: Schema.Types.ObjectId,

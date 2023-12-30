@@ -1,5 +1,6 @@
 import blogRoute from "express";
 import createBlogController from "../controller/blog/createBlog.js";
+import saveBlogController from "../controller/blog/saveBlog.js";
 import AuthHandel from "../middleware/auth/AuthHandler.js";
 import { checkSchema } from "express-validator";
 
@@ -42,12 +43,25 @@ const createBlogScheme = {
     },
   },
 };
+const createDraftScheme = {
+  title: {
+    notEmpty: { errorMessage: "Title is required" },
+  },
+  banner: {
+    notEmpty: { errorMessage: "Banner is required" },
+    matches: { options: /[://]/, errorMessage: "Banner must be a url" },
+  },
+};
 
 BlogRoute.route("/create").post(
   AuthHandel,
   checkSchema(createBlogScheme),
   createBlogController
 );
-// AuthRoute.route("/sign-up").post(checkSchema(registerScheme), registerCtrl);
+BlogRoute.route("/draft").post(
+  AuthHandel,
+  checkSchema(createDraftScheme),
+  saveBlogController
+);
 
 export default BlogRoute;
