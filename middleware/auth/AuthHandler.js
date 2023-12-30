@@ -1,11 +1,23 @@
-const expressAsyncHandler = require("express-async-handler");
-const jwt = require("jsonwebtoken");
-const User = require("../../model/user/UserModel");
+import expressAsyncHandler from "express-async-handler";
+import jwt from "jsonwebtoken";
+
+const STATUS = 401;
+const MESSAGE_1 = "PLease attach bearer token";
+const MESSAGE_2 = "Unauthorized access";
+// const MESSAGE_3 = "Token expired, login again";
+const FAILURE = "ACCESS_DENIED";
 
 const AuthHandel = expressAsyncHandler(async (req, res, next) => {
   let token;
-  if (!req.headers.authorization?.startsWith("Bearer"))
-    throw new Error("Please provide the bearer token");
+  if (!req.headers.authorization?.startsWith("Bearer")) {
+    return res.status(STATUS).json({
+      status: false,
+      code: FAILURE,
+      payload: {
+        error: MESSAGE_1,
+      },
+    });
+  }
   try {
     token = req.headers.authorization.replace("Bearer ", "");
     if (token) {
@@ -13,17 +25,29 @@ const AuthHandel = expressAsyncHandler(async (req, res, next) => {
       // console.log(decoded);
 
       //find the user by _id
-      const user = await User.findById(decoded?.id).select("-password");
+      // const user = await User.findById(decoded?.id).select("_id");
 
-      //attach the user the rerquest object
-      req.user = user;
+      //attach the user the request object
+      req.userId = decoded?.id;
       next();
     } else {
-      throw new Error("You don't have permission to access'");
+      return res.status(STATUS).json({
+        status: false,
+        code: FAILURE,
+        payload: {
+          error: MESSAGE_2,
+        },
+      });
     }
   } catch (error) {
-    throw new Error("Token expired, login again");
+    return res.status(STATUS).json({
+      status: false,
+      code: FAILURE,
+      payload: {
+        error: MESSAGE_2,
+      },
+    });
   }
 });
 
-module.exports = AuthHandel;
+export default AuthHandel;

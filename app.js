@@ -2,8 +2,8 @@ import DbConnect from "./configs/db/dbConnect.js";
 import express from "express";
 import cors from "cors";
 import authRoute from "./routes/authRoutes.js";
+import blogRoute from "./routes/blogRoute.js";
 import { notFound, errorHandler } from "./middleware/error/ErrorHandler.js";
-// const PostRoute = require("./routes/PostRoute");
 // const CommentRoute = require("./routes/CommentRoute");
 // const StoryRoute = require("./routes/StoryRoute");
 const app = express();
@@ -18,8 +18,8 @@ app.use(cors());
 
 // Auth routes
 app.use("/api/auth/", authRoute);
-// // Post routes
-// app.use("/api/post/", PostRoute);
+// Blog routes
+app.use("/api/blog/", blogRoute);
 // // Comment routes
 // app.use("/api/comment/", CommentRoute);
 // //Story routes
