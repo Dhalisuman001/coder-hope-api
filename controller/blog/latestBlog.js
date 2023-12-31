@@ -10,7 +10,7 @@ const latestBlogController = expressAsyncHandler(async (req, res) => {
     const blog = await Blog.find({ draft: false })
       .populate(
         "author",
-        "personal_info.profile_image personal_info.fullname personal_info.username -_id"
+        "personal_info.profile_img personal_info.fullname personal_info.username -_id"
       )
       .sort({ publishedAt: -1 })
       .select("blog_id title banner des activity tags publishedAt -_id")
