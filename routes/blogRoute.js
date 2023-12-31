@@ -1,6 +1,7 @@
 import blogRoute from "express";
 import createBlogController from "../controller/blog/createBlog.js";
 import saveBlogController from "../controller/blog/saveBlog.js";
+import latestBlogController from "../controller/blog/latestBlog.js";
 import AuthHandel from "../middleware/auth/AuthHandler.js";
 import { checkSchema } from "express-validator";
 
@@ -63,5 +64,6 @@ BlogRoute.route("/draft").post(
   checkSchema(createDraftScheme),
   saveBlogController
 );
+BlogRoute.route("/latest").get(latestBlogController);
 
 export default BlogRoute;
