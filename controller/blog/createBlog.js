@@ -40,6 +40,7 @@ const createBlogController = expressAsyncHandler(async (req, res) => {
       banner,
       content,
       blog_id,
+      tags,
       author: authorID,
       draft: Boolean(draft),
     });
