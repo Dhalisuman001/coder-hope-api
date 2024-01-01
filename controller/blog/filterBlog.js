@@ -14,12 +14,8 @@ const filterBlogController = expressAsyncHandler(async (req, res) => {
         "author",
         "personal_info.profile_img personal_info.fullname personal_info.username -_id"
       )
-      .sort({
-        "activity.total_read": -1,
-        "activity.total_likes": -1,
-        publishedAt: -1,
-      })
-      .select("blog_id title publishedAt -_id")
+      .sort({ publishedAt: -1 })
+      .select("blog_id title banner des activity tags publishedAt -_id")
       .limit(LIMIT);
 
     res.status(200).json({
