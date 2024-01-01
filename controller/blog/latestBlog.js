@@ -7,7 +7,7 @@ const LIMIT = 5;
 
 const latestBlogController = expressAsyncHandler(async (req, res) => {
   try {
-    const { page } = req.query;
+    const { page = 1 } = req.query;
     const blog = await Blog.find({ draft: false })
       .populate(
         "author",
@@ -15,8 +15,8 @@ const latestBlogController = expressAsyncHandler(async (req, res) => {
       )
       .sort({ publishedAt: -1 })
       .select("blog_id title banner des activity tags publishedAt -_id")
-      .skip((page - 1) * LIMIT)
-      .limit(LIMIT);
+      .limit(LIMIT * page);
+    // .skip((page - 1) * LIMIT)
 
     res.status(200).json({
       status: true,
