@@ -5,6 +5,7 @@ import latestBlogController from "../controller/blog/latestBlog.js";
 import AuthHandel from "../middleware/auth/AuthHandler.js";
 import trendingBlogController from "../controller/blog/trendingBlog.js";
 import { checkSchema } from "express-validator";
+import filterBlogController from "../controller/blog/filterBlog.js";
 
 const BlogRoute = blogRoute.Router();
 
@@ -67,5 +68,6 @@ BlogRoute.route("/draft").post(
 );
 BlogRoute.route("/latest").get(latestBlogController);
 BlogRoute.route("/trending").get(trendingBlogController);
+BlogRoute.route("/filter-blogs").get(filterBlogController);
 
 export default BlogRoute;
