@@ -4,7 +4,7 @@ import cors from "cors";
 import authRoute from "./routes/authRoutes.js";
 import blogRoute from "./routes/blogRoute.js";
 import { notFound, errorHandler } from "./middleware/error/ErrorHandler.js";
-// const CommentRoute = require("./routes/CommentRoute");
+import commonRoute from "./routes/commonRoute.js";
 // const StoryRoute = require("./routes/StoryRoute");
 const app = express();
 
@@ -20,6 +20,8 @@ app.use(cors());
 app.use("/api/auth/", authRoute);
 // Blog routes
 app.use("/api/blog/", blogRoute);
+// Common routes
+app.use("/api/common/", commonRoute);
 // // Comment routes
 // app.use("/api/comment/", CommentRoute);
 // //Story routes
