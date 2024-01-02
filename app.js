@@ -5,7 +5,8 @@ import authRoute from "./routes/authRoutes.js";
 import blogRoute from "./routes/blogRoute.js";
 import { notFound, errorHandler } from "./middleware/error/ErrorHandler.js";
 import commonRoute from "./routes/commonRoute.js";
-// const StoryRoute = require("./routes/StoryRoute");
+import userRoute from "./routes/userRoute.js";
+
 const app = express();
 
 // Db Connection
@@ -18,6 +19,8 @@ app.use(cors());
 
 // Auth routes
 app.use("/api/auth/", authRoute);
+// User routes
+app.use("/api/user/", userRoute);
 // Blog routes
 app.use("/api/blog/", blogRoute);
 // Common routes
