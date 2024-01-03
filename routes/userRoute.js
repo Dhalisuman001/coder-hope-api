@@ -1,5 +1,6 @@
 import userRoute from "express";
 import fetchUserProfileController from "../controller/user/fetchProfile.js";
+import fetchUserBlogController from "../controller/user/fetchUserBlog.js";
 
 // const {
 //   AuthHandel,
@@ -14,8 +15,8 @@ const UserRoute = userRoute.Router();
 // Fetch user profile
 UserRoute.route("/profile/:username").get(fetchUserProfileController);
 
-// Fetch single user other than me
-// UserRoute.route("/:id").get(AuthHandel, FetchUserCtrl);
+// Fetch user blog
+UserRoute.route("/blog").get(fetchUserBlogController);
 
 // User update personal info
 // UserRoute.route("/update").post(AuthHandel, UpdateUserCtrl);
