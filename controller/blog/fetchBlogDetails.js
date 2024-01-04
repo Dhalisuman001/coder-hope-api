@@ -1,5 +1,6 @@
 import expressAsyncHandler from "express-async-handler";
 import Blog from "../../Schema/Blog.js";
+import User from "../../Schema/User.js";
 
 const SUCCESS = "FETCH_BLOG_DETAILS_SUCCESS";
 const FAILURE = "FETCH_BLOG_DETAILS_FAILURE";
@@ -12,7 +13,8 @@ const fetchUserblogController = expressAsyncHandler(async (req, res) => {
 
     const blog = await Blog.findOneAndUpdate(
       { blog_id },
-      { $inc: { "activity.total_reads": increment } }
+      { $inc: { "activity.total_reads": increment } },
+      { new: true }
     )
       .populate(
         "author",
@@ -21,6 +23,10 @@ const fetchUserblogController = expressAsyncHandler(async (req, res) => {
       .select(
         "blog_id title banner content des activity tags publishedAt -_id"
       );
+    await User.findOneAndUpdate(
+      { "personal_info.username": blog.author.personal_info.username },
+      { $inc: { "account_info.total_reads": increment } }
+    );
 
     res.status(200).json({
       status: true,
