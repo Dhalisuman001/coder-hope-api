@@ -7,6 +7,7 @@ import trendingBlogController from "../controller/blog/trendingBlog.js";
 import { checkSchema } from "express-validator";
 import filterBlogController from "../controller/blog/filterBlog.js";
 import latestBlogCountController from "../controller/blog/blogCount.js";
+import fetchBlogDetailsController from "../controller/blog/fetchBlogDetails.js";
 
 const BlogRoute = blogRoute.Router();
 
@@ -71,5 +72,6 @@ BlogRoute.route("/latest").get(latestBlogController);
 BlogRoute.route("/trending").get(trendingBlogController);
 BlogRoute.route("/filter-blogs").get(filterBlogController);
 BlogRoute.route("/count-blogs").get(latestBlogCountController);
+BlogRoute.route("/get-blog/:blog_id").get(fetchBlogDetailsController);
 
 export default BlogRoute;
