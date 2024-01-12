@@ -18,7 +18,7 @@ const getCommentsController = expressAsyncHandler(async (req, res) => {
       )
       .sort({ publishedAt: -1 });
     // .skip((page - 1) * LIMIT)
-    if (comment) throw new Error("Blog not found");
+    if (!comment) throw new Error("Blog not found");
 
     res.status(200).json({
       status: true,
@@ -30,7 +30,7 @@ const getCommentsController = expressAsyncHandler(async (req, res) => {
       status: false,
       code: FAILURE,
       payload: {
-        error: "Blog not found",
+        error: error.message,
       },
     });
   }
