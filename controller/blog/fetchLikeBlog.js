@@ -20,7 +20,7 @@ const fetchLikeBlogController = expressAsyncHandler(async (req, res) => {
     });
   }
 
-  // const authorID = req.userId;
+  const authorID = req.userId;
   const { blog_id } = req.params;
 
   try {
@@ -30,10 +30,14 @@ const fetchLikeBlogController = expressAsyncHandler(async (req, res) => {
 
     if (!blog) throw new Error("Blog does not exist!");
 
+    const isLiked = blog?.activity?.likedBy?.find(
+      (e) => e.toString() === authorID.toString()
+    );
+
     return res.status(200).json({
       status: true,
       code: SUCCESS,
-      payload: blog.activity,
+      payload: { ...blog.activity, isLiked: isLiked ? true : false },
     });
 
     // console.log(blog);
