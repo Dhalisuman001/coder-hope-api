@@ -9,6 +9,8 @@ import filterBlogController from "../controller/blog/filterBlog.js";
 import latestBlogCountController from "../controller/blog/blogCount.js";
 import fetchBlogDetailsController from "../controller/blog/fetchBlogDetails.js";
 import updateBlogController from "../controller/blog/updateBlog.js";
+import likeBlogController from "../controller/blog/likeBlog.js";
+import fetchLikeBlogController from "../controller/blog/fetchLikeBlog.js";
 
 const BlogRoute = blogRoute.Router();
 
@@ -112,5 +114,7 @@ BlogRoute.route("/trending").get(trendingBlogController);
 BlogRoute.route("/filter-blogs").get(filterBlogController);
 BlogRoute.route("/count-blogs").get(latestBlogCountController);
 BlogRoute.route("/get-blog/:blog_id").get(fetchBlogDetailsController);
+BlogRoute.route("/like-blog/:blog_id").put(AuthHandel, likeBlogController);
+BlogRoute.route("/like-blog/:blog_id").get(AuthHandel, fetchLikeBlogController);
 
 export default BlogRoute;
