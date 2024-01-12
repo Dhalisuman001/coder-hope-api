@@ -6,6 +6,7 @@ import blogRoute from "./routes/blogRoute.js";
 import { notFound, errorHandler } from "./middleware/error/ErrorHandler.js";
 import commonRoute from "./routes/commonRoute.js";
 import userRoute from "./routes/userRoute.js";
+import commentRoute from "./routes/commentRoute.js";
 
 const app = express();
 
@@ -25,8 +26,8 @@ app.use("/api/user/", userRoute);
 app.use("/api/blog/", blogRoute);
 // Common routes
 app.use("/api/common/", commonRoute);
-// // Comment routes
-// app.use("/api/comment/", CommentRoute);
+// Comment routes
+app.use("/api/comment/", commentRoute);
 // //Story routes
 // app.use("/api/story/", StoryRoute);
 
