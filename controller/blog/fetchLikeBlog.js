@@ -25,7 +25,7 @@ const fetchLikeBlogController = expressAsyncHandler(async (req, res) => {
 
   try {
     let blog = await Blog.findOne({ blog_id }).select(
-      "activity.total_likes  activity.likedBy -_id"
+      "activity.total_likes  activity.likedBy publishedAt updatedAt"
     );
 
     if (!blog) throw new Error("Blog does not exist!");
@@ -37,7 +37,13 @@ const fetchLikeBlogController = expressAsyncHandler(async (req, res) => {
     return res.status(200).json({
       status: true,
       code: SUCCESS,
-      payload: { ...blog.activity, isLiked: isLiked ? true : false },
+      payload: {
+        total_likes: blog.activity.total_likes,
+        isLiked: isLiked ? true : false,
+        id: blog_id,
+        publishedAt: blog.publishedAt,
+        updatedAt: blog.updatedAt,
+      },
     });
 
     // console.log(blog);

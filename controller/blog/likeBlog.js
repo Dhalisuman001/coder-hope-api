@@ -55,7 +55,7 @@ const likeBlogController = expressAsyncHandler(async (req, res) => {
         {
           new: true,
         }
-      );
+      ).select("activity.total_likes publishedAt updatedAt");
       // console.log(blog);
     }
 
@@ -66,6 +66,8 @@ const likeBlogController = expressAsyncHandler(async (req, res) => {
         id: blog_id,
         publishedAt: blog.publishedAt,
         updatedAt: blog.updatedAt,
+        ...blog.activity,
+        isLiked: !isLiked ? true : false,
       },
     });
 
