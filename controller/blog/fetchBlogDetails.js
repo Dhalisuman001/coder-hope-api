@@ -21,7 +21,7 @@ const fetchUserblogController = expressAsyncHandler(async (req, res) => {
         "personal_info.profile_img personal_info.fullname personal_info.username "
       )
       .select(
-        "blog_id title banner content des activity tags publishedAt -_id"
+        "blog_id title banner content des activity tags publishedAt "
       );
     await User.findOneAndUpdate(
       { "personal_info.username": blog.author.personal_info.username },
