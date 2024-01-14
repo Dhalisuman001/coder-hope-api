@@ -37,8 +37,10 @@ const createCommentController = expressAsyncHandler(async (req, res) => {
 
     await Blog.findByIdAndUpdate(blog_id, {
       $push: { comments: resp._id },
-      $inc: { "activity.total_comments": 1 },
-      "acitvity.total_parent_comments": 1,
+      $inc: {
+        "activity.total_comments": 1,
+        "acitvity.total_parent_comments": 1,
+      },
     });
     // console.log("working", update_blog);
 
