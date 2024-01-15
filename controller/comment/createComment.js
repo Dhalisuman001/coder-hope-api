@@ -22,36 +22,47 @@ const createCommentController = expressAsyncHandler(async (req, res) => {
   }
 
   try {
-    let { comment, blog_id, blog_author } = req.body;
+    let { comment, blog_id, blog_author, replying_to } = req.body;
     const commented_by = req.userId;
 
     // Creating comment document
-    let commentObj = new Comment({
+    let commentObj = {
       blog_id,
       blog_author,
       comment,
       commented_by,
-    });
+    };
 
-    const resp = await commentObj.save();
+    if (replying_to) {
+      commentObj.parent = replying_to;
+    }
+
+    const resp = await new Comment(commentObj).save();
 
     await Blog.findByIdAndUpdate(blog_id, {
       $push: { comments: resp._id },
       $inc: {
         "activity.total_comments": 1,
-        "acitvity.total_parent_comments": 1,
+        "acitvity.total_parent_comments": replying_to ? 0 : 1,
       },
     });
     // console.log("working", update_blog);
 
     let notiObject = new Notification({
-      type: "comment",
+      type: replying_to ? "reply" : "comment",
       blog: blog_id,
       notification_for: blog_author,
       user: commented_by,
       comment: resp._id,
     });
-    await notiObject.save();
+    if (replying_to) {
+      notiObject.replied_on_comment = replying_to;
+      let temp = await Comment.findByIdAndUpdate(replying_to, {
+        $push: { children: resp._id },
+      });
+      notiObject.notification_for = temp.commented_by;
+    }
+    await new Notification(notiObject).save();
 
     // console.log("Notificatin", update_notification);
 
