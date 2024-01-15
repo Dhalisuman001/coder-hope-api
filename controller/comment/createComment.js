@@ -22,7 +22,7 @@ const createCommentController = expressAsyncHandler(async (req, res) => {
   }
 
   try {
-    let { comment, blog_id, blog_author, replying_to } = req.body;
+    let { comment, blog_id, blog_author, replying_to, isReply } = req.body;
     const commented_by = req.userId;
 
     // Creating comment document
@@ -31,10 +31,12 @@ const createCommentController = expressAsyncHandler(async (req, res) => {
       blog_author,
       comment,
       commented_by,
+      isReply: false,
     };
 
     if (replying_to) {
       commentObj.parent = replying_to;
+      commentObj.isReply = isReply;
     }
 
     const resp = await new Comment(commentObj).save();

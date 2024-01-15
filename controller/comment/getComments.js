@@ -11,11 +11,12 @@ const getCommentsController = expressAsyncHandler(async (req, res) => {
     // const author = req.userId;
     if (!blog_id) throw new Error("Blog ID is required");
 
-    const comment = await Comment.find({ blog_id })
+    const comment = await Comment.find({ blog_id, isReply: false })
       .populate(
         "commented_by",
         "personal_info.profile_img personal_info.fullname personal_info.username -_id"
       )
+      .populate("children")
       .sort({ publishedAt: -1 });
     // .skip((page - 1) * LIMIT)
     if (!comment) throw new Error("Blog not found");
