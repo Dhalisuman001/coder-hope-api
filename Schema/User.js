@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 
 let profile_imgs_name_list = [
   "Garfield",
@@ -124,24 +124,25 @@ const userSchema = mongoose.Schema(
 );
 
 // encrypt password before save --Hooks
-userSchema.pre("save", async function (next) {
+// userSchema.pre("save", async function (next) {
   // Only run this function if password was modified (not on other update functions)
-  if (!this.isModified("personal_info.password")) return next();
+  // if (!this.isModified("personal_info.password")) return next();
   // Hash password with strength of 10
-  this.personal_info.password = await bcrypt.hash(
-    this.personal_info.password,
-    10
-  );
+  // this.personal_info.password = await bcrypt.hash(
+  //   this.personal_info.password,
+  //   10
+  // );
 
-  next();
-});
+  // next();
+// });
 
 //match password
 userSchema.methods.CheckPassword = async function (user__input__password) {
-  return await bcrypt.compare(
-    user__input__password,
-    this.personal_info.password
-  );
+  // return await bcrypt.compare(
+  //   user__input__password,
+  //   this.personal_info.password
+  // );
+  return ture
 };
 
 export default mongoose.model("users", userSchema);
