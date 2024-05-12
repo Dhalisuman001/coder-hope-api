@@ -11,6 +11,7 @@ import fetchBlogDetailsController from "../controller/blog/fetchBlogDetails.js";
 import updateBlogController from "../controller/blog/updateBlog.js";
 import likeBlogController from "../controller/blog/likeBlog.js";
 import fetchLikeBlogController from "../controller/blog/fetchLikeBlog.js";
+import serveVideoController from "../controller/videos/serveVideo.js";
 
 const BlogRoute = blogRoute.Router();
 
@@ -111,6 +112,7 @@ BlogRoute.route("/draft").post(
 );
 BlogRoute.route("/latest").get(latestBlogController);
 BlogRoute.route("/trending").get(trendingBlogController);
+BlogRoute.route("/videos/:filename").get(serveVideoController);
 BlogRoute.route("/filter-blogs").get(filterBlogController);
 BlogRoute.route("/count-blogs").get(latestBlogCountController);
 BlogRoute.route("/get-blog/:blog_id").get(fetchBlogDetailsController);
